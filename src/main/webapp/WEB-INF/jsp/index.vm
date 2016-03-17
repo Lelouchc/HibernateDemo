@@ -1,0 +1,13 @@
+#set($aaa = "123")
+$aaa
+#macro(test $arr)
+    $arr
+#end
+<html>
+<head></head>
+<body>
+<div>
+<input type="button" value="test" onclick="alert(#test("111"));"/>
+</div>
+</body>
+</html>
