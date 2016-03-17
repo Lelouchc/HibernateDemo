@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            throw new Exception("用户名或密码错误");
         }
         return uid;
     }

@@ -24,7 +24,7 @@
             <form:errors path="newPwd" cssClass="warning"/>
         </p>
         <p align="center">
-            <label for="newPwdRepeat">确认原密码</label><input type="password" id="newPwdRepeat" name="newPwdRepeat"/>
+            <label for="newPwdRepeat">确认新密码</label><input type="password" id="newPwdRepeat" name="newPwdRepeat"/>
             <form:errors path="newPwdRepeat" cssClass="warning"/>
         </p>
         <p align="center" style="color: red;font-size: small;">${pwdResult}</p>

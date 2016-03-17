@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.common.validator.Second;
+import com.demo.entity.User;
 import com.demo.model.UserLogin;
 import com.demo.model.UserModel;
 import com.demo.model.UserUpdPassword;
@@ -35,7 +36,8 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/goLogin", method = RequestMethod.GET)
-    public String goLogin() {
+    public String goLogin(Model model) {
+        model.addAttribute("userLogin", new UserLogin());
         return "login/login";
     }
 
@@ -45,7 +47,8 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/goRegister", method = RequestMethod.GET)
-    public String goRegister() {
+    public String goRegister(Model model) {
+        model.addAttribute("user", new User());
         return "login/register";
     }
 
@@ -105,8 +108,9 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/logOff", method = RequestMethod.GET)
-    public String logOff(SessionStatus sessionStatus) {
+    public String logOff(SessionStatus sessionStatus, Model model) {
         sessionStatus.setComplete();
+        model.addAttribute("userLogin", new UserLogin());
         return "login/login";
     }
 
