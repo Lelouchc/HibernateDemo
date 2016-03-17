@@ -104,7 +104,7 @@ public class UserController {
      * @param sessionStatus
      * @return
      */
-    @RequestMapping(value = "/logOff")
+    @RequestMapping(value = "/logOff", method = RequestMethod.GET)
     public String logOff(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "login/login";
@@ -116,7 +116,7 @@ public class UserController {
      * @param model
      * @return
      */
-    @RequestMapping("/getUsers")
+    @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public String getUsers(Model model) {
         model.addAttribute("list", userService.getUsers());
         return "main/user_list";
@@ -127,7 +127,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/goChangePassword")
+    @RequestMapping(value = "/goChangePassword", method = RequestMethod.GET)
     public String goChangePassword() {
         return "user/change_password";
     }
@@ -166,7 +166,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/goUpdUser")
+    @RequestMapping(value = "/goUpdUser", method = RequestMethod.GET)
     public String goUpdUser(@ModelAttribute("userid") Integer userid, Model model) {
         model.addAttribute("user", userService.getUser(userid));
         return "user/edit_user";
@@ -206,7 +206,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/goHome")
+    @RequestMapping(value = "/goHome", method = RequestMethod.GET)
     public String goHome() {
         return "main/home";
     }

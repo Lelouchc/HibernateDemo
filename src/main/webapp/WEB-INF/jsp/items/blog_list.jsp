@@ -12,6 +12,8 @@
     <title>博客列表</title>
 </head>
 <body>
-<c:forEach items="${list}" var=""
+<c:forEach items="${list}" var="blog">
+    ${blog}
+</c:forEach>
 </body>
 </html>

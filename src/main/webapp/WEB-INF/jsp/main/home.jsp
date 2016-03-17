@@ -17,17 +17,9 @@
            onclick="location.href='${pageContext.request.contextPath}/user/logOff'"/>
 </c:if>
 <hr/>
-<form action="${pageContext.request.contextPath}/log/getLogs" method="post">
-    <input type="submit" value="查看日志"/>
-</form>
-<form action="${pageContext.request.contextPath}/user/goChangePassword" method="post">
-    <input type="submit" value="修改密码"/>
-</form>
-<form action="${pageContext.request.contextPath}/user/goUpdUser" method="post">
-    <input type="submit" value="修改当前登陆用户信息"/>
-</form>
-<form action="${pageContext.request.contextPath}/user/getUsers" method="post">
-    <input type="submit" value="查看用户列表"/>
-</form>
+<p><input type="button" value="查看日志" onclick="location.href='${pageContext.request.contextPath}/log/getLogs'"/></p>
+<p><input type="button" value="修改密码" onclick="location.href='${pageContext.request.contextPath}/user/goChangePassword'"/></p>
+<p><input type="button" value="修改当前登陆用户信息" onclick="location.href='${pageContext.request.contextPath}/user/goUpdUser'"/></p>
+<p><input type="button" value="查看用户列表" onclick="location.href='${pageContext.request.contextPath}/user/getUsers'"/></p>
 </body>
 </html>
