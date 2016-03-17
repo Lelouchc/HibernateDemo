@@ -1,7 +1,6 @@
 package com.demo.controller;
 
 import com.demo.common.validator.Second;
-import com.demo.entity.User;
 import com.demo.model.UserLogin;
 import com.demo.model.UserModel;
 import com.demo.model.UserUpdPassword;
@@ -13,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -34,7 +34,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/goLogin")
+    @RequestMapping(value = "/goLogin", method = RequestMethod.GET)
     public String goLogin() {
         return "login/login";
     }
@@ -42,12 +42,10 @@ public class UserController {
     /**
      * 跳转到注册页面
      *
-     * @param model
      * @return
      */
-    @RequestMapping("/goRegister")
-    public String goRegister(Model model) {
-        model.addAttribute("user", new User());
+    @RequestMapping(value = "/goRegister", method = RequestMethod.GET)
+    public String goRegister() {
         return "login/register";
     }
 
