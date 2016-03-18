@@ -10,9 +10,8 @@ import com.demo.model.UserUpdPassword;
 import com.demo.service.intf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,49 +26,45 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private LogDao logDao;
 
-    @Override
+    @Transactional(value = "txManager")
     public List<User> getUsers() {
         return userDao.getUsers();
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public User getUser(int userid) {
         return userDao.getUser(userid);
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public long countUser() {
         return userDao.countUser();
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public int checkLogin(UserLogin userLogin) throws Exception {
-        Iterator iterator = userDao.checkLogin(userLogin.getAccount());
-        int uid = 0;
-        while (iterator.hasNext()) {
-            User user = (User) iterator.next();
+        try {
+            User user = userDao.checkLogin(userLogin.getAccount());
             if (user.getPassword().equals(EncryptionUtil.encryptMS1(userLogin.getPassword()))) {
-                uid = user.getId();
                 try {
-                    logDao.addLog(uid, "用户登陆");
+                    logDao.addLog(user.getId(), "用户登陆");
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new Exception("登陆失败");
                 }
             }
-        }
-        if (uid == 0) {
+            return user.getId();
+        } catch (Exception e) {
             try {
                 logDao.addLog(userDao.getUserId(userLogin.getAccount()), "用户登陆失败：用户名或密码错误");
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
             throw new Exception("用户名或密码错误");
         }
-        return uid;
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public boolean addUser(UserModel user) throws Exception {
         if (userDao.hasAccount(user.getAccount()))
             throw new Exception("账号已存在");
@@ -79,19 +74,17 @@ public class UserServiceImpl implements UserService {
             throw new Exception("电话已存在");
         if (userDao.hasEmail(user.getEmail()))
             throw new Exception("邮箱已存在");
-        Serializable result = userDao.addUser(user.setPassword(EncryptionUtil.encryptMS1(user.getPassword())).cloneToUser());
-        if (result instanceof Integer) {
-            try {
-                logDao.addLog((Integer) result, "用户注册");
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new Exception("注册失败");
-            }
+        userDao.addUser(user.setPassword(EncryptionUtil.encryptMS1(user.getPassword())).cloneToUser());
+        try {
+            logDao.addLog(0, "用户注册");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("注册失败");
         }
-        return !(result instanceof Integer) || (Integer) result > 0;
+        return true;
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public boolean updUser(UserModel user) throws Exception {
         if (userDao.hasUsername(user.getUsername()))
             throw new Exception("昵称已存在");
@@ -102,7 +95,7 @@ public class UserServiceImpl implements UserService {
         return userDao.updUser(user.cloneToUser());
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public boolean updUserPassword(UserUpdPassword userUpdPassword) throws Exception {
         if (!userUpdPassword.getNewPwd().equals(userUpdPassword.getNewPwdRepeat()))
             throw new Exception("两次输入不一致");

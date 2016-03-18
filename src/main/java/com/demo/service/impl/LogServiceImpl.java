@@ -5,6 +5,7 @@ import com.demo.entity.Log;
 import com.demo.service.intf.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class LogServiceImpl implements LogService {
     @Autowired
     private LogDao logDao;
 
-    @Override
+    @Transactional(value = "txManager")
     public List<Log> getLogs(){
         return logDao.getLogs();
     }

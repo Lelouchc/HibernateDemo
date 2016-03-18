@@ -2,7 +2,6 @@ package com.demo.dao.intf;
 
 import com.demo.entity.Log;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -39,7 +38,7 @@ public interface LogDao {
      * @param log 日志对象
      * @return
      */
-    Serializable addLog(Log log);
+    void addLog(Log log);
 
     /**
      * 新增日志（当前时间）
@@ -48,7 +47,7 @@ public interface LogDao {
      * @param operate 操作
      * @return
      */
-    Serializable addLog(int userid, String operate);
+    void addLog(int userid, String operate);
 
     /**
      * 新增日志（指定时间）
@@ -58,5 +57,5 @@ public interface LogDao {
      * @param createtime 创建时间
      * @return
      */
-    Serializable addLog(int userid, String operate, String createtime);
+    void addLog(int userid, String operate, String createtime);
 }

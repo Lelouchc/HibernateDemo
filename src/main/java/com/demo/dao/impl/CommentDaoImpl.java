@@ -15,48 +15,43 @@ import java.util.List;
 public class CommentDaoImpl extends BaseDao implements CommentDao {
     @Override
     public List<Comment> getCommentsForBlog(int blogid) {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("from Comment c where c.blogid=:blogid")
+        return this.getEntityManager()
+                .createQuery("from Comment c where c.blogid=:blogid", Comment.class)
                 .setParameter("blogid", blogid)
-                .list();
+                .getResultList();
     }
 
     @Override
     public List<Comment> getCommentsForUser(int userid) {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("from Comment c where c.userid=:userid")
+        return this.getEntityManager()
+                .createQuery("from Comment c where c.userid=:userid", Comment.class)
                 .setParameter("userid", userid)
-                .list();
+                .getResultList();
     }
 
     @Override
     public Comment getComment(int commentid) {
-        return this.getSessionFactory().getCurrentSession()
-                .load(Comment.class, commentid);
+        return this.getEntityManager()
+                .createQuery("from Comment c where c.id=:commentid", Comment.class)
+                .setParameter("commentid", commentid)
+                .getSingleResult();
     }
 
     @Override
-    public boolean addComment(Comment comment) {
-        return (boolean) this.getSessionFactory().getCurrentSession()
-                .save(comment);
-    }
-
-    @Override
-    public boolean updComment(Comment comment) {
-        try {
-            this.getSessionFactory().getCurrentSession()
-                    .saveOrUpdate(comment);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+    public void addComment(Comment comment) {
+        this.getEntityManager()
+                .persist(comment);
     }
 
     @Override
     public boolean delComment(Comment comment) {
         try {
-            this.getSessionFactory().getCurrentSession()
-                    .delete(comment);
+            this.getEntityManager()
+                    .createQuery("delete from Comment c where c.userid=:userid and c.blogid=:blogid and c.createtime=:createtime")
+                    .setParameter("userid", comment.getCommentPK().getUserid())
+                    .setParameter("blogid", comment.getCommentPK().getBlogid())
+                    .setParameter("createtime", comment.getCommentPK().getCreatetime())
+                    .executeUpdate();
         } catch (Exception e) {
             return false;
         }

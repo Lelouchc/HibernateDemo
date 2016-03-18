@@ -16,20 +16,22 @@ public interface CategoryDao {
     List<Category> getCategories();
 
     /**
-     * 天际类别
+     * 添加类别
      *
      * @param category 待添加类型信息
      * @return
      */
-    boolean addCategory(Category category);
+    void addCategory(Category category);
+
+    void updCategory(Category category);
 
     /**
      * 删除类别
      *
-     * @param name 待删除类别名称
+     * @param category 待删除类别
      * @return
      */
-    boolean delCategory(String name);
+    void delCategory(Category category);
 
     /**
      * 判断类别下是否存在博客

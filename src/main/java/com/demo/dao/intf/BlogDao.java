@@ -54,7 +54,7 @@ public interface BlogDao {
      * @param blog 待添加博客信息
      * @return
      */
-    boolean addBlog(Blog blog);
+    void addBlog(Blog blog);
 
     /**
      * 更新博客

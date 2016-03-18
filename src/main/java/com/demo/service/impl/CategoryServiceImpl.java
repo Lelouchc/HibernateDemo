@@ -1,10 +1,11 @@
 package com.demo.service.impl;
 
-import com.demo.entity.Category;
 import com.demo.dao.intf.CategoryDao;
+import com.demo.entity.Category;
 import com.demo.service.intf.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,18 +17,23 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryDao categoryDao;
 
-    @Override
+    @Transactional(value = "txManager")
     public List<Category> getCategories() {
         return categoryDao.getCategories();
     }
 
-    @Override
-    public boolean addCategory(Category category) {
-        return categoryDao.addCategory(category);
+    @Transactional(value = "txManager")
+    public void addCategory(Category category) {
+        categoryDao.addCategory(category);
     }
 
-    @Override
-    public boolean delCategory(String name) {
-        return categoryDao.delCategory(name);
+    @Transactional(value = "txManager")
+    public void updCategory(Category category) {
+        categoryDao.updCategory(category);
+    }
+
+    @Transactional(value = "txManager")
+    public void delCategory(Category category) {
+        categoryDao.delCategory(category);
     }
 }

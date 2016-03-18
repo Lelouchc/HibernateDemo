@@ -15,53 +15,53 @@ import java.util.List;
 public class BlogDaoImpl extends BaseDao implements BlogDao {
     @Override
     public List<Blog> getBlogs() {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("from Blog b")
-                .list();
+        return this.getEntityManager()
+                .createQuery("from Blog b", Blog.class)
+                .getResultList();
     }
 
     @Override
     public List<Blog> getBlogs(int userid) {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("from Blog b where b.userid=:userid")
+        return this.getEntityManager()
+                .createQuery("from Blog b where b.userid=:userid", Blog.class)
                 .setParameter("userid", userid)
-                .list();
+                .getResultList();
     }
 
     @Override
     public List<Blog> getBlogs(String category) {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("from Blog b where b.category=:category")
+        return this.getEntityManager()
+                .createQuery("from Blog b where b.category=:category", Blog.class)
                 .setParameter("category", category)
-                .list();
+                .getResultList();
     }
 
     @Override
     public List<Blog> getBlogs(int userid, String category) {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("from Blog b where b.userid=:userid and b.category=:category")
+        return this.getEntityManager()
+                .createQuery("from Blog b where b.userid=:userid and b.category=:category", Blog.class)
                 .setParameter("userid", userid)
                 .setParameter("category", category)
-                .list();
+                .getResultList();
     }
 
     @Override
     public Blog getBlog(int blogid) {
-        return this.getSessionFactory().getCurrentSession()
-                .load(Blog.class, blogid);
+        return this.getEntityManager()
+                .find(Blog.class, blogid);
     }
 
     @Override
-    public boolean addBlog(Blog blog) {
-        return (boolean) this.getSessionFactory().getCurrentSession()
-                .save(blog);
+    public void addBlog(Blog blog) {
+        this.getEntityManager()
+                .persist(blog);
     }
 
     @Override
     public boolean updBlog(Blog blog) {
         try {
-            this.getSessionFactory().getCurrentSession()
-                    .saveOrUpdate(blog);
+            this.getEntityManager()
+                    .persist(blog);
         } catch (Exception e) {
             return false;
         }
@@ -71,7 +71,7 @@ public class BlogDaoImpl extends BaseDao implements BlogDao {
     @Override
     public boolean delBlog(int id) {
         try {
-            return this.getSessionFactory().getCurrentSession()
+            return this.getEntityManager()
                     .createQuery("delete from Blog b where b.id=:id")
                     .setParameter("id", id)
                     .executeUpdate() > 0;

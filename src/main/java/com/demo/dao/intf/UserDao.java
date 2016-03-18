@@ -2,8 +2,6 @@ package com.demo.dao.intf;
 
 import com.demo.entity.User;
 
-import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -46,7 +44,7 @@ public interface UserDao {
      * @param account  账号/手机号/邮箱
      * @return
      */
-    Iterator checkLogin(String account);
+    User checkLogin(String account);
 
     /**
      * 验证原密码是否正确
@@ -70,7 +68,7 @@ public interface UserDao {
      * @param user 待添加用户信息
      * @return
      */
-    Serializable addUser(User user);
+    void addUser(User user);
 
     /**
      * 更新用户信息

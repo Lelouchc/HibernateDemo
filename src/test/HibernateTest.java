@@ -1,4 +1,5 @@
 import com.demo.entity.Category;
+import com.demo.model.UserLogin;
 import com.demo.service.impl.CategoryServiceImpl;
 import com.demo.service.impl.LogServiceImpl;
 import com.demo.service.impl.UserServiceImpl;
@@ -22,7 +23,7 @@ public class HibernateTest {
         try {
             ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
             UserService userService = a.getBean(UserServiceImpl.class);
-//            userService.checkLogin("yyy", "123");
+            userService.checkLogin(new UserLogin().setAccount("yy").setPassword("123"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -34,6 +35,9 @@ public class HibernateTest {
             ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
             UserService userService = a.getBean(UserServiceImpl.class);
             userService.getUsers().forEach(System.out::println);
+            System.out.println(userService.getUser(1));
+//            UserJpa userJpa = a.getBean(UserJpaImpl.class);
+//            userJpa.getUsers().forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -69,6 +73,28 @@ public class HibernateTest {
             ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
             CategoryService categoryService = a.getBean(CategoryServiceImpl.class);
             categoryService.addCategory(new Category().setName("test1"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdCategory() {
+        try {
+            ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
+            CategoryService categoryService = a.getBean(CategoryServiceImpl.class);
+            categoryService.updCategory(new Category().setName("test1").setBlogcount(2));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testDelCategory(){
+        try {
+            ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
+            CategoryService categoryService = a.getBean(CategoryServiceImpl.class);
+            categoryService.delCategory(new Category().setName("test1"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

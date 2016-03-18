@@ -38,15 +38,7 @@ public interface CommentDao {
      * @param comment 待添加评论信息
      * @return
      */
-    boolean addComment(Comment comment);
-
-    /**
-     * 更新评论信息
-     *
-     * @param comment 待更新评论信息
-     * @return
-     */
-    boolean updComment(Comment comment);
+    void addComment(Comment comment);
 
     /**
      * 删除评论信息

@@ -5,7 +5,6 @@ import com.demo.dao.intf.LogDao;
 import com.demo.entity.Log;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,47 +16,47 @@ import java.util.List;
 public class LogDaoImpl extends BaseDao implements LogDao {
     @Override
     public List<Log> getLogs() {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("select new Log(l.id,l.userid,l.operate,l.createtime,u.username) from Log l,User u where l.userid = u.id")
-                .list();
+        return this.getEntityManager()
+                .createQuery("select new Log(l.id,l.userid,l.operate,l.createtime,u.username) from Log l,User u where l.userid = u.id", Log.class)
+                .getResultList();
     }
 
     @Override
     public List<Log> getLogs(int userid) {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("select new Log(l.id,l.userid,l.operate,l.createtime,u.username) from Log l,User u where l.userid = u.id and l.userid=:userid")
+        return this.getEntityManager()
+                .createQuery("select new Log(l.id,l.userid,l.operate,l.createtime,u.username) from Log l,User u where l.userid = u.id and l.userid=:userid", Log.class)
                 .setParameter("userid", userid)
-                .list();
+                .getResultList();
     }
 
     @Override
     public List<Log> getLogs(String datePre, String dateSub) {
-        return this.getSessionFactory().getCurrentSession()
-                .createQuery("select new Log(l.id,l.userid,l.operate,l.createtime,u.username) from Log l,User u where l.userid = u.id and l.createtime between :datePre and :dateSub")
+        return this.getEntityManager()
+                .createQuery("select new Log(l.id,l.userid,l.operate,l.createtime,u.username) from Log l,User u where l.userid = u.id and l.createtime between :datePre and :dateSub", Log.class)
                 .setParameter("datePre", datePre)
                 .setParameter("dateSub", dateSub)
-                .list();
+                .getResultList();
     }
 
     @Override
-    public Serializable addLog(Log log) {
-        return this.getSessionFactory().getCurrentSession()
-                .save(log);
+    public void addLog(Log log) {
+        this.getEntityManager()
+                .persist(log);
     }
 
     @Override
-    public Serializable addLog(int userid, String operate) {
-        return this.getSessionFactory().getCurrentSession()
-                .save(new Log()
+    public void addLog(int userid, String operate) {
+        this.getEntityManager()
+                .persist(new Log()
                         .setUserid(userid)
                         .setOperate(operate)
                         .setCreatetime(SystemUtil.TIME_NOW));
     }
 
     @Override
-    public Serializable addLog(int userid, String operate, String createtime) {
-        return this.getSessionFactory().getCurrentSession()
-                .save(new Log()
+    public void addLog(int userid, String operate, String createtime) {
+        this.getEntityManager()
+                .persist(new Log()
                         .setUserid(userid)
                         .setOperate(operate)
                         .setCreatetime(createtime));

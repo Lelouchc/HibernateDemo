@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by yy on 2016/3/10.
  */
-@Aspect
+//@Aspect
 @Component("aop1")
 public class AopHelper2 {
     @Pointcut("execution(* com.demo.service.impl.*.*(..))")

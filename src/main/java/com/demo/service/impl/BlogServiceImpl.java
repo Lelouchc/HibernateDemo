@@ -7,6 +7,7 @@ import com.demo.model.BlogModel;
 import com.demo.service.intf.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private CategoryDao categoryDao;
 
-    @Override
+    @Transactional(value = "txManager")
     public List<Blog> getBlogs(int userid, String category) {
         if (userid == 0 && category.isEmpty())
             return blogDao.getBlogs();
@@ -33,14 +34,14 @@ public class BlogServiceImpl implements BlogService {
             return blogDao.getBlogs(userid, category);
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public boolean addBlog(BlogModel blog){
         blogDao.addBlog(blog.cloneToBlog());
         categoryDao.increase(blog.getCategory());
         return true;
     }
 
-    @Override
+    @Transactional(value = "txManager")
     public boolean delBlog(int id){
         return blogDao.delBlog(id);
     }
