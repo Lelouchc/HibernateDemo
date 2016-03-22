@@ -54,6 +54,8 @@ public class User {
      */
     @Column(length = 30)
     private String email;
+    @Version
+    private int version;
 
     public int getId() {
         return id;
@@ -124,6 +126,15 @@ public class User {
 
     public User setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public User setVersion(int version) {
+        this.version = version;
         return this;
     }
 

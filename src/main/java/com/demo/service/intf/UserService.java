@@ -4,6 +4,7 @@ import com.demo.entity.User;
 import com.demo.model.UserLogin;
 import com.demo.model.UserModel;
 import com.demo.model.UserUpdPassword;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -59,6 +60,9 @@ public interface UserService {
      * @throws Exception
      */
     boolean updUser(UserModel user) throws Exception;
+
+    @Transactional(value = "txManager")
+    boolean updUserWithVersion(UserModel userModel);
 
     /**
      * 修改密码

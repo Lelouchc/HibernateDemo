@@ -1,5 +1,6 @@
 import com.demo.entity.Category;
 import com.demo.model.UserLogin;
+import com.demo.model.UserModel;
 import com.demo.service.impl.CategoryServiceImpl;
 import com.demo.service.impl.LogServiceImpl;
 import com.demo.service.impl.UserServiceImpl;
@@ -24,6 +25,17 @@ public class HibernateTest {
             ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
             UserService userService = a.getBean(UserServiceImpl.class);
             userService.checkLogin(new UserLogin().setAccount("yy").setPassword("123"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRegister(){
+        try {
+            ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
+            UserService userService = a.getBean(UserServiceImpl.class);
+            userService.addUser(new UserModel().setAccount("yy").setPassword("123"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -60,7 +72,8 @@ public class HibernateTest {
         try {
             ApplicationContext a = new ClassPathXmlApplicationContext(new String[]{"classpath:springmvc-config.xml"});
             UserService userService = a.getBean(UserServiceImpl.class);
-//            userService.updUser(new User().setId(2).setAccount("yy").setSex("男").setBirthday("2016/03/14").setPhone("13456789009").setEmail("ttt@qq.com"));
+            userService.updUserWithVersion(new UserModel().setId(1).setUsername("yyyy"));
+//            userService.updUser(new UserModel().setId(1).setAccount("yy").setSex("男").setBirthday("2016/03/14").setPhone("13456789009").setEmail("ttt@qq.com").setVersion(0));
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());

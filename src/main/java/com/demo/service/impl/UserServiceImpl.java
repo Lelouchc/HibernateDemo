@@ -96,6 +96,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(value = "txManager")
+    public boolean updUserWithVersion(UserModel userModel){
+        return userDao.updUserWithVersion(userModel.cloneToUser());
+    }
+
+    @Transactional(value = "txManager")
     public boolean updUserPassword(UserUpdPassword userUpdPassword) throws Exception {
         if (!userUpdPassword.getNewPwd().equals(userUpdPassword.getNewPwdRepeat()))
             throw new Exception("两次输入不一致");

@@ -91,6 +91,14 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     }
 
     @Override
+    public boolean updUserWithVersion(User user){
+        User u = getUser(user.getId());
+        u.setUsername(user.getUsername());
+        this.getEntityManager().flush();
+        return true;
+    }
+
+    @Override
     public boolean updUserPassword(User user) {
         return this.getEntityManager()
                 .createQuery("update User u set u.password=:password where u.id=:id")

@@ -78,6 +78,8 @@ public interface UserDao {
      */
     boolean updUser(User user);
 
+    boolean updUserWithVersion(User user);
+
     /**
      * 修改密码
      *

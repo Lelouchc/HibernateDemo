@@ -31,6 +31,7 @@ public class UserModel {
     private String phone;
     @Email(message = "{user.email.format}", groups = {First.class, Second.class})
     private String email;
+    private int version;
 
     public int getId() {
         return id;
@@ -104,6 +105,15 @@ public class UserModel {
         return this;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public UserModel setVersion(int version) {
+        this.version = version;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "用户{" +
@@ -124,6 +134,7 @@ public class UserModel {
                 .setSex(sex)
                 .setBirthday(birthday)
                 .setPhone(phone)
-                .setEmail(email);
+                .setEmail(email)
+                .setVersion(version);
     }
 }
