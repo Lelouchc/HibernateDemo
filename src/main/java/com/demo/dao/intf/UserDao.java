@@ -3,6 +3,7 @@ package com.demo.dao.intf;
 import com.demo.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by yy on 2016/3/8.
@@ -29,7 +30,7 @@ public interface UserDao {
      * @param userid 用户ID
      * @return
      */
-    User getUser(int userid);
+    Optional<User> getUser(int userid);
 
     /**
      * 获取用户ID

@@ -7,6 +7,7 @@ import com.demo.model.UserUpdPassword;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by yy on 2016/3/8.
@@ -25,7 +26,7 @@ public interface UserService {
      * @param userid
      * @return
      */
-    User getUser(int userid);
+    Optional<User> getUser(int userid);
 
     /**
      * 统计用户数量

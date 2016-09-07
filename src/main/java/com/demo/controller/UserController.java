@@ -172,7 +172,7 @@ public class UserController {
      */
     @RequestMapping(value = "/goUpdUser", method = RequestMethod.GET)
     public String goUpdUser(@ModelAttribute("userid") Integer userid, Model model) {
-        model.addAttribute("user", userService.getUser(userid));
+        model.addAttribute("user", userService.getUser(userid).get());
         return "user/edit_user";
     }
 
@@ -191,7 +191,7 @@ public class UserController {
             @ModelAttribute("userid") Integer userid,
             Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("user", userService.getUser(userid));
+            model.addAttribute("user", userService.getUser(userid).get());
             return "user/edit_user";
         }
         try {

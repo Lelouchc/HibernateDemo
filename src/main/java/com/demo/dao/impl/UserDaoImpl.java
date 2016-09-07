@@ -5,6 +5,7 @@ import com.demo.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by yy on 2016/3/8.
@@ -32,11 +33,11 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     }
 
     @Override
-    public User getUser(int userid) {
-        return this.getEntityManager()
+    public Optional<User> getUser(int userid) {
+        return Optional.ofNullable(this.getEntityManager()
                 .createQuery("from User u where u.id=:id", User.class)
                 .setParameter("id", userid)
-                .getSingleResult();
+                .getSingleResult());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
     @Override
     public boolean updUserWithVersion(User user){
-        User u = getUser(user.getId());
+        User u = getUser(user.getId()).get();
         u.setUsername(user.getUsername());
         this.getEntityManager().flush();
         return true;

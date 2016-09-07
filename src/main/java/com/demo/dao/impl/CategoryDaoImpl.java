@@ -23,7 +23,7 @@ public class CategoryDaoImpl extends BaseDao implements CategoryDao {
     @Override
     public void addCategory(Category category) {
         this.getEntityManager()
-                .persist(category);
+                .merge(category);
     }
 
     @Override

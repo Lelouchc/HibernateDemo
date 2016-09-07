@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by yy on 2016/3/8.
@@ -28,11 +31,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(value = "txManager")
     public List<User> getUsers() {
-        return userDao.getUsers();
+        return userDao.getUsers().stream().sorted(Comparator.comparing(User::getUsername)).collect(Collectors.toList());
     }
 
     @Transactional(value = "txManager")
-    public User getUser(int userid) {
+    public Optional<User> getUser(int userid) {
         return userDao.getUser(userid);
     }
 
