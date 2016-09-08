@@ -20,4 +20,8 @@ public class BlogController {
         model.addAttribute("list", blogService.getBlogs(0, ""));
         return "items/blog_list";
     }
+
+    public void demo() {
+        System.out.println("22");
+    }
 }
